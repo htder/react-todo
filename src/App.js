@@ -1,25 +1,79 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Overview from './components/Overview.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+/* // My Solution
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: "",
+      tasks: [],
+    }
+
+    this.onClickBtn = this.onClickBtn.bind(this);
+  }
+
+  onClickBtn() {
+    this.setState({
+      tasks: [...this.state.tasks, this.state.input],
+      input: "",
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text" placeholder="Enter task..." value={this.state.input} 
+          onChange={(e) => this.setState({input: e.target.value})}/>
+        <button onClick={this.onClickBtn}>Add Task!</button>
+        <Overview tasks={this.state.tasks}/>
+      </div>
+    );
+  }
 }
+*/
 
+// TOP Solution 
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      task: { text: "" },
+      tasks: [],
+    };
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      task: {
+        text: e.target.value,
+      }
+    });
+  };
+
+  onClickBtn = (e) => {
+    this.setState({
+      tasks: [...this.state.tasks, this.state.task.text],
+      task: { text: "" },
+    });
+  };
+
+  render() {
+    const { task, tasks } = this.state;
+
+    return (
+      <div>
+        <form>
+          <label>Enter task</label>
+          <input type="text" onChange={this.handleChange} value={task.text}/>
+          <button type="button" onClick={this.onClickBtn}>
+            Add Task
+          </button>
+        </form>
+        <Overview tasks={tasks}/>
+      </div>
+    )
+  }
+}
 export default App;
