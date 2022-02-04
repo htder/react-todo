@@ -33,7 +33,7 @@ class App extends Component {
 }
 */
 
-// TOP Solution 
+// Combined Solution 
 class App extends Component {
   constructor() {
     super();
